@@ -1,0 +1,59 @@
+---
+title: "Reloops Product Walkthrough: A Map of Every Screen"
+sidebarTitle: "Product Walkthrough"
+description: "Step through every screen in Reloops — from workspaces and projects to asset review, version compare, collections, sharing, and team settings."
+---
+
+Use this walkthrough when you want a quick visual map of the product before you dive in. Each step describes one screen, what it is for, and where to find it in the app. Routes use placeholders such as `:workspaceId`, `:projectId`, `:assetId`, and `:collectionId`. When you are ready to follow a guided setup flow, see [Getting started](/onboarding/getting-started).
+
+<Steps>
+
+  <Step title="Workspaces — /workspaces">
+    **Workspaces** (`/workspaces`) is the first screen you see after signing in. It lists every workspace you belong to as a card grid. Select any card to enter that workspace, or choose **New Workspace** to create one. Use a client, brand, or team name so the workspace is easy to identify at a glance.
+  </Step>
+
+  <Step title="Projects — /workspace/:workspaceId/projects">
+    **Projects** (`/workspace/:workspaceId/projects`) shows all the projects inside a workspace. Each project card displays the project name and a summary of its assets. Select a card to open the project, or choose **New Project** to start a new body of work.
+  </Step>
+
+  <Step title="Create a Project — /workspace/:workspaceId/projects">
+    The **Create New Project** modal (`/workspace/:workspaceId/projects`) opens when you select **New Project**. Choose a blank project or pick a template — such as Social Media — that pre-populates folder structure and asset statuses. Enter a project name, then confirm to create the project.
+  </Step>
+
+  <Step title="Project Assets — /workspace/:workspaceId/projects/:projectId">
+    **Project assets** (`/workspace/:workspaceId/projects/:projectId`) is the default view inside a project. It lists every asset as a file card. Open the **Upload** menu to add files from your device, or drag and drop files directly onto the page. Select any asset card to open it for review.
+  </Step>
+
+  <Step title="Kanban Status Board — /workspace/:workspaceId/projects/:projectId">
+    The **Kanban board** (`/workspace/:workspaceId/projects/:projectId`) groups every asset by its current review status — for example, **Needs Review**, **In Review**, and **Approved**. Switch to this view when you want a project-wide picture of progress. Drag asset cards between columns to update their status.
+  </Step>
+
+  <Step title="Reviewers and Links Tabs — /workspace/:workspaceId/projects/:projectId">
+    The **Reviewers** and **Links** tabs (`/workspace/:workspaceId/projects/:projectId`) live alongside the Assets and Kanban views. Use the **Reviewers** tab to see every guest reviewer you have added to the project and the assets assigned to them. Use the **Links** tab to see all active share links created for assets in this project.
+  </Step>
+
+  <Step title="Collections — /workspace/:workspaceId/collections and /workspace/:workspaceId/collections/:collectionId">
+    **Collections** (`/workspace/:workspaceId/collections`) lets you build curated visual galleries from assets that already exist in your projects. Open a collection, select a source folder, choose the assets you want to include, and then adjust appearance settings — background, layout, and branding — to match your delivery needs. The source files stay in their original projects.
+  </Step>
+
+  <Step title="Asset Review — /workspace/:workspaceId/projects/:projectId/assets/:assetId">
+    The **asset review page** (`/workspace/:workspaceId/projects/:projectId/assets/:assetId`) is the core review surface. Open any asset here to play or view the file, leave timestamped or pinned comments, add annotations, assign the asset to a team member, and update its status. Reviewers can approve the asset or request revisions directly from this screen.
+  </Step>
+
+  <Step title="Share an Asset — /workspace/:workspaceId/projects/:projectId/assets/:assetId and /share/:token">
+    The **Create Share Link** modal (`/workspace/:workspaceId/projects/:projectId/assets/:assetId`) generates a shareable URL for a single asset. Send the link to an external reviewer — they open it at `/share/:token` and can leave comments without needing a Reloops account. Use this when one file needs focused external feedback rather than full project access.
+  </Step>
+
+  <Step title="Compare Versions — /workspace/:workspaceId/projects/:projectId/assets/:parentAssetId/compare">
+    **Compare mode** (`/workspace/:workspaceId/projects/:projectId/assets/:parentAssetId/compare`) displays two versions of an asset side by side. Use it to confirm that revision requests were addressed, or to present the before-and-after to a client. Comments from both versions are visible during comparison.
+  </Step>
+
+  <Step title="Website Review — /workspace/:workspaceId/projects/:projectId/assets/:assetId">
+    **Website review** (`/workspace/:workspaceId/projects/:projectId/assets/:assetId`) uses the same review surface as any other asset, applied to a full-page website capture. Add the URL to capture the page, then leave pinned comments at any point on the screenshot to give precise, context-specific feedback.
+  </Step>
+
+  <Step title="Notifications, Team, and Settings — /workspace/:workspaceId/teams and /workspace/:workspaceId/settings">
+    The **notifications panel**, **team management page** (`/workspace/:workspaceId/teams`), and **workspace settings** (`/workspace/:workspaceId/settings`) cover the operational side of a workspace. Check notifications to stay on top of review activity and file updates. Use the team page to manage members and AI agents. Use settings to update the workspace profile, review billing limits, and monitor storage usage.
+  </Step>
+
+</Steps>

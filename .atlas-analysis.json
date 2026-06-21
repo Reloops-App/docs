@@ -1,0 +1,84 @@
+{
+  "projectType": "saas",
+  "projectName": "Reloops",
+  "projectDescription": "Reloops is a creative review and collaboration platform for organizing, reviewing, and sharing assets across projects and teams.",
+  "theme": "almond",
+  "primaryColor": "#49badd",
+  "lightColor": "#b774ed",
+  "darkColor": null,
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "onboarding/product-walkthrough",
+              "onboarding/getting-started"
+            ]
+          },
+          {
+            "group": "Workspace & Team",
+            "pages": [
+              "workspace/workspaces",
+              "workspace/team-and-settings",
+              "workspace/notifications"
+            ]
+          },
+          {
+            "group": "Projects & Assets",
+            "pages": [
+              "projects/create-a-project",
+              "projects/assets-overview",
+              "projects/upload-assets",
+              "projects/project-assets-view",
+              "projects/kanban-status-workflow"
+            ]
+          },
+          {
+            "group": "Review & Sharing",
+            "pages": [
+              "review/asset-review",
+              "review/leave-comments",
+              "review/website-review",
+              "review/share-links",
+              "review/project-reviewers-and-links"
+            ]
+          },
+          {
+            "group": "Collections",
+            "pages": [
+              "collections/collections-overview",
+              "collections/build-and-style-collections"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Asset upload and management (images, videos, web captures)",
+    "Timestamped video comments and frame-level annotations",
+    "Asset review workflow with statuses (Needs Review, In Review, Approved)",
+    "Kanban board for tracking review progress across a project",
+    "Share links with version locking, expiration, and download controls",
+    "Collections for curated client-facing galleries without moving source files",
+    "Website/landing page review via full-page captures",
+    "Notifications panel with tabs for mentions, reviews, and file updates",
+    "Guest reviewer access via share links",
+    "Team and workspace management with AI agents support"
+  ],
+  "publicApiSurface": [
+    "Workspaces — /workspaces",
+    "Projects — /workspace/:workspaceId/projects",
+    "Project assets — /workspace/:workspaceId/projects/:projectId",
+    "Asset review — /workspace/:workspaceId/projects/:projectId/assets/:assetId",
+    "Asset compare — /workspace/:workspaceId/projects/:projectId/assets/:parentAssetId/compare",
+    "Collections — /workspace/:workspaceId/collections/:collectionId",
+    "Share link (public) — /share/:token",
+    "Team management — /workspace/:workspaceId/teams",
+    "Workspace settings — /workspace/:workspaceId/settings"
+  ]
+}

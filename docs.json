@@ -1,0 +1,108 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "almond",
+  "name": "Reloops",
+  "description": "Guides for organizing, reviewing and sharing creative work with Reloops.",
+  "colors": {
+    "primary": "#49badd",
+    "light": "#b774ed",
+    "dark": "#49badd"
+  },
+  "favicon": "/favicon.ico",
+  "icons": {
+    "library": "lucide"
+  },
+  "styling": {
+    "eyebrows": "breadcrumbs"
+  },
+  "contextual": {
+    "options": ["copy", "view", "assistant"]
+  },
+  "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Home",
+          "icon": "house",
+          "href": "/"
+        },
+        {
+          "anchor": "Reloops App",
+          "icon": "arrow-up-right",
+          "href": "https://reloops.app"
+        }
+      ]
+    },
+    "directory": "card",
+    "groups": [
+      {
+        "group": "Get Started",
+        "icon": "rocket",
+        "expanded": true,
+        "pages": [
+          "introduction",
+          "onboarding/product-walkthrough",
+          "onboarding/getting-started"
+        ]
+      },
+      {
+        "group": "Workspace & Team",
+        "icon": "building-2",
+        "expanded": true,
+        "pages": [
+          "workspace/workspaces",
+          "workspace/team-and-settings",
+          "workspace/notifications"
+        ]
+      },
+      {
+        "group": "Projects & Assets",
+        "icon": "folder-open",
+        "expanded": true,
+        "pages": [
+          "projects/create-a-project",
+          "projects/assets-overview",
+          "projects/upload-assets",
+          "projects/project-assets-view",
+          "projects/kanban-status-workflow"
+        ]
+      },
+      {
+        "group": "Review & Sharing",
+        "icon": "message-circle",
+        "expanded": true,
+        "pages": [
+          "review/asset-review",
+          "review/leave-comments",
+          "review/website-review",
+          "review/share-links",
+          "review/project-reviewers-and-links"
+        ]
+      },
+      {
+        "group": "Collections",
+        "icon": "layout-grid",
+        "expanded": true,
+        "pages": [
+          "collections/collections-overview",
+          "collections/build-and-style-collections"
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "https://media.brand.dev/c26148da-467d-4c3f-977e-55966593b476.png",
+    "dark": "https://media.brand.dev/c26148da-467d-4c3f-977e-55966593b476.png"
+  },
+  "navbar": {
+    "links": [],
+    "primary": {
+      "type": "button",
+      "label": "Open App",
+      "href": "https://reloops.app"
+    }
+  },
+  "footer": {
+    "socials": {}
+  }
+}

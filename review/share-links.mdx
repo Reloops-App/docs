@@ -1,0 +1,43 @@
+---
+title: "Create, Configure, and Send Asset Share Links in Reloops"
+sidebarTitle: "Share Links"
+description: "Generate a shareable link for any asset in Reloops to send one file for external review — no workspace login needed for the recipient."
+---
+
+An asset share link is the simplest way to send a single asset to someone outside your workspace. The recipient opens a public review page at `/share/:token` and can view the asset and leave comments without needing a Reloops account or workspace access. Use share links when an external client, stakeholder, or contractor needs to review one specific asset without joining the whole workspace.
+
+## Create an asset share link
+
+<Steps>
+  <Step title="Open the asset">
+    Navigate to the project and open the asset you want to share. Confirm you are viewing the correct version before generating the link.
+  </Step>
+  <Step title="Open the Share modal">
+    Select **Share** in the asset review toolbar. The **Create Share Link** modal opens.
+  </Step>
+  <Step title="Configure the link settings">
+    Choose your options before generating the link:
+
+    - **Lock to current version** — pins the link to the version open right now, so future uploads do not change what the reviewer sees
+    - **Expiration date** — set a date after which the link stops working; leave this blank if the link should stay active indefinitely
+    - **Allow downloads** — enable this if the reviewer is allowed to download the file, or leave it off to keep the asset view-only
+  </Step>
+  <Step title="Generate and copy the link">
+    Click **Create Link**. Copy the generated URL and send it directly to your reviewer by email, chat, or any other channel.
+  </Step>
+</Steps>
+
+<Note>
+  Locking the link to the current version ensures the reviewer sees exactly the version you intended to send. If you upload a new version after sharing the link and the link is **not** version-locked, the reviewer will see the updated file — which may not be what you want during an active review cycle.
+</Note>
+
+## Checklist before sending
+
+Run through these points before you share the link:
+
+- **Correct asset and version are open** — double-check the version selector before you open Share
+- **Expiration date is set** if access should end after a specific deadline
+- **Downloads are configured** to match what you have agreed with the recipient
+- **Link is sent only to the intended reviewer** — anyone with the URL can open the public share page, so treat the link as you would any shared credential
+
+To view all active links for a project and check their expiry dates, open the **Links** tab on the project page. See [Manage Project Reviewers and Share Links](/review/project-reviewers-and-links) for details.
