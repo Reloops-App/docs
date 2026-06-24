@@ -68,6 +68,14 @@
         ]
       },
       {
+        "group": "AI & DAM",
+        "icon": "sparkles",
+        "pages": [
+          "ai/ai-search",
+          "ai/ai-tagging"
+        ]
+      },
+      {
         "group": "Review & Sharing",
         "icon": "message-circle",
         "expanded": true,
@@ -86,6 +94,13 @@
         "pages": [
           "collections/collections-overview",
           "collections/build-and-style-collections"
+        ]
+      },
+      {
+        "group": "FAQ",
+        "icon": "circle-help",
+        "pages": [
+          "faq/lifetime-deal"
         ]
       }
     ]

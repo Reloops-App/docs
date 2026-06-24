@@ -1,0 +1,52 @@
+---
+title: "AI Tagging & Smart Metadata"
+sidebarTitle: "AI Tagging"
+description: "Reloops automatically generates descriptions and tags for every asset you upload, so files become searchable, organized, and easy to surface across the workspace."
+---
+
+Every asset uploaded to Reloops is automatically analyzed to produce **Smart Metadata** - an AI-generated description and a set of tags that describe what's actually inside the file. This is what powers semantic [AI Search](/ai/ai-search) and keeps your DAM organized without anyone manually tagging files.
+
+<Frame caption="Smart Metadata panel showing an AI-generated description and tags for a Reloops logo asset.">
+  ![Smart Metadata panel with AI description suggestion and generated tags including logo, branding, gradient, purple, cyan, infinity symbol, icon, stacked logo, vertical, cropped, black background, vector style, minimal](/images/smart-metadata-ai-tags.png)
+</Frame>
+
+## What gets generated
+
+When an asset finishes uploading, Reloops runs it through the AI pipeline and produces:
+
+- **Description suggestion** - a short natural-language summary of the asset (composition, subject, style, colors, background, layout).
+- **Generated tags** - a list of single and multi-word tags covering subject, format, color, style, and context.
+- **Captions / OCR** - any text visible inside the file is extracted so it becomes searchable.
+- **Visual analysis** - shape, color palette, and content signals used for semantic matching.
+
+All of this is stored alongside the asset and used by the search index.
+
+## Reviewing and editing Smart Metadata
+
+1. Open any asset from a project or from search results.
+2. Expand the **Smart Metadata** panel in the asset sidebar.
+3. Click the **AI description suggestion** to accept it as the asset description, or edit it inline before saving.
+4. Generated tags can be removed individually, and you can add your own manual tags at any time.
+
+Manual edits always take precedence over AI suggestions, but the AI-generated values stay in the search index so the asset remains discoverable either way.
+
+## When tagging runs
+
+AI tagging runs automatically when:
+
+- A new asset is uploaded to any project
+- A new version is added to an existing asset (the new version is re-analyzed)
+- You manually trigger **Regenerate** from the Smart Metadata panel
+
+## AI credits
+
+Smart Metadata generation uses **AI credits** from your workspace balance. Each asset analyzed (or re-analyzed) consumes credits based on file type and size - videos cost more than still images because every keyframe is examined.
+
+You can monitor your credit usage and remaining balance in **Workspace settings -\> Billing & limits**. If you run out of credits, uploads still succeed but new assets won't be auto-tagged until credits are topped up or the next monthly allowance resets.
+
+## Why it matters
+
+- **Zero manual work** - the team never has to stop and tag files
+- **Better search** - assets are findable by what they _look like_, not just what they're named
+- **Consistent metadata** - everyone in the workspace gets the same structured tags
+- **Faster client delivery** - pulling together a deliverable becomes a one-line search instead of a folder hunt
