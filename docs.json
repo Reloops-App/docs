@@ -63,6 +63,7 @@
           "projects/create-a-project",
           "projects/assets-overview",
           "projects/upload-assets",
+          "projects/folders-and-organization",
           "projects/project-assets-view",
           "projects/kanban-status-workflow"
         ]
