@@ -37,9 +37,7 @@ Use versions when a new file is the next revision of the same asset, not a separ
 </Steps>
 
 <Frame caption="Drag the revised asset card onto the original asset card to create one version stack.">
-  <video controls muted playsInline preload="metadata" style={{ width: "100%", borderRadius: "8px" }}>
-    <source src="/images/versions/2.version-1783874200593.mp4" type="video/mp4" />
-  </video>
+  <video controls muted playsInline preload="metadata" style={{ width: "100%", borderRadius: "8px" }} />
 </Frame>
 
 For the cleanest review and compare experience, keep a version stack within the same media family, such as image revisions with image revisions or video revisions with video revisions. If you are uploading through the API or CLI, pass the existing asset as the parent so the new upload lands in the same version chain immediately. See [Reloops CLI and Public API](/developers/reloops-cli-and-public-api) for developer workflows.
@@ -57,22 +55,22 @@ Compare mode only appears when an asset has at least two versions. If the asset 
 <Steps>
   <Step title="Open from the review page">
     Open a versioned asset, click the **v2** version pill beside the asset name, then select **Compare versions** at the bottom of the menu.
+
+    <Frame caption="Open the three-dot menu on a multi-version asset card to find Compare and Manage versions.">
+      ![Asset card menu showing Compare, Edit, Download, Manage versions, and other actions](/images/versions/click3Dot.png)
+    </Frame>
   </Step>
   <Step title="Open from an asset card">
     In the project **Assets** view or workspace asset search, hover a multi-version asset card, open the three-dot menu in the top-right corner, then choose **Compare**.
+
+    <Frame caption="Choose Compare from the asset card menu to enter side-by-side review.">
+      ![Asset card menu with the Compare option highlighted](/images/versions/hoveroncompareindropdown.png)
+    </Frame>
   </Step>
   <Step title="Confirm the compare page loaded">
     Compare mode opens at `/workspace/:workspaceId/projects/:projectId/assets/:parentAssetId/compare` for project assets, or `/workspace/:workspaceId/assets/:parentAssetId/compare` from workspace search.
   </Step>
 </Steps>
-
-<Frame caption="Open the three-dot menu on a multi-version asset card to find Compare and Manage versions.">
-  ![Asset card menu showing Compare, Edit, Download, Manage versions, and other actions](/images/versions/click3Dot.png)
-</Frame>
-
-<Frame caption="Choose Compare from the asset card menu to enter side-by-side review.">
-  ![Asset card menu with the Compare option highlighted](/images/versions/hoveroncompareindropdown.png)
-</Frame>
 
 <Frame caption="Compare mode shows two versions side by side with version-aware comments.">
   ![Reloops compare versions page showing two Maria UGC versions side by side with version-aware comments](/images/versions/Reloops_comparison_mode.png)
