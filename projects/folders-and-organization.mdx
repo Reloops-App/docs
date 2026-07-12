@@ -6,6 +6,10 @@ description: "Create folders, upload nested structures, and use Copy to and Move
 
 As a project grows, folders keep everything findable. Reloops gives you full control over the folder structure inside any project, plus quick **Copy to** and **Move to** actions so you can reorganize assets without breaking comments, versions, or share links.
 
+<Frame caption="Folders appear above assets in the project Assets view, with nested folder counts and previews.">
+  ![Reloops project Assets view showing prepared folders and asset cards](/images/prepared-files-folder.png)
+</Frame>
+
 ## Creating folders
 
 You can create folders directly inside any project or as nested subfolders.
@@ -41,20 +45,20 @@ This is the fastest way to move an existing campaign or client archive into Relo
 
 ## Moving assets between folders
 
-Use **Move to** when an asset belongs somewhere else and you don't need a duplicate.
+Use **Move** when an asset or folder belongs somewhere else and you do not need a duplicate.
 
 <Steps>
   <Step title="Select one or more assets">
-    Click an asset to select it, or shift-click / cmd-click to select multiple. You can also select a whole folder.
+    Click **Select**, then choose one or more asset stacks or folders.
   </Step>
   <Step title="Open the asset menu">
-    Click the **More** (three-dot) menu on the asset card, or right-click the selection.
+    Use **Move** from the selection toolbar, or use **Move to folder** from an individual asset card menu.
   </Step>
   <Step title="Choose Move to">
-    Pick **Move to** and use the folder picker to choose a destination - inside the same project or in a different project in the same workspace.
+    Use the destination picker to choose a project or folder. You can move assets inside the same project or into a different project in the same workspace.
   </Step>
   <Step title="Confirm">
-    The asset moves immediately. Comments, versions, status, and share links travel with it.
+    The selected work moves immediately. Comments, versions, status, AI metadata, and activity history travel with it.
   </Step>
 </Steps>
 
@@ -64,35 +68,34 @@ Use **Copy to** when you need the same asset to live in two places - for example
 
 <Steps>
   <Step title="Select the assets">
-    Highlight the asset(s) or folder you want to duplicate.
+    Click **Select**, then choose the asset stack or stacks you want to duplicate.
   </Step>
   <Step title="Open Copy to">
-    From the **More** menu (or right-click), choose **Copy to**.
+    Choose **Copy** from the selection toolbar.
   </Step>
   <Step title="Pick a destination">
     Use the folder picker to choose any folder in the current project or another project in the workspace.
   </Step>
-  <Step title="Decide what to bring along">
-    Reloops copies the latest version by default. You can choose to include the full version history if you need it.
+  <Step title="Confirm">
+    Reloops creates an independent project placement for the selected asset stacks.
   </Step>
 </Steps>
 
 <Note>
-  Copied assets are independent files. Comments and approvals made on the copy do not flow back to the original.
+  Copy is available for asset stacks only. If you select a folder, use **Move** or download the folder as a ZIP.
 </Note>
 
 ## Move vs Copy: which one to use
 
 | Action | Use when... | What happens |
 | --- | --- | --- |
-| **Move to** | The asset belongs in a different folder or project. | Original is relocated. Comments, versions, status, and share links follow. |
-| **Copy to** | You need the same file in two places, or you want a clean reset for a new round. | A new independent asset is created in the destination. |
+| **Move** | The asset or folder belongs in a different folder or project. | The selected item is relocated. Comments, versions, status, AI metadata, and activity history follow. |
+| **Copy** | You need the same asset stack to appear in another folder or project. | The selected asset stack is copied into the destination. |
 
 ## Other folder actions
 
 - **Rename** - double-click the folder name or use **Rename** from the More menu.
 - **Delete** - removes the folder and its contents. Deleted assets go to the workspace trash and can be restored.
-- **Share folder** - generate a share link for an entire folder so reviewers see only what's inside it. See [Share Links](/review/share-links).
 - **Download folder** - download the whole folder as a zip from the download menu.
 
 ## What stays intact when you reorganize
@@ -102,7 +105,7 @@ Reloops is built so reorganizing never breaks your work. When you move or rename
 - Comments and annotations stay on the asset
 - Version history is preserved
 - Active share links keep working with the new location
-- Review status (In Progress, In Review, Approved, etc.) is unchanged
+- Review status (**Needs review**, **In review**, **Approved**, or **No status**) is unchanged
 - AI tags and Smart Metadata travel with the file (see [AI Tagging](/ai/ai-tagging))
 
 Reorganize as often as you need - the structure can evolve with the project.

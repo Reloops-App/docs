@@ -1,0 +1,111 @@
+---
+title: "Version History and Compare Mode"
+sidebarTitle: "Versions & Compare"
+description: "Manage asset version stacks, switch between versions, compare two versions side by side, and keep comments tied to the exact revision."
+---
+
+Reloops keeps revisions together as an asset version stack. Each version keeps its own preview, comments, activity, status, uploader, and timestamp, while the stack gives your team one place to track the full review history.
+
+<Frame caption="On the asset review page, click the version pill beside the asset name, such as v2, to open version actions.">
+  ![Asset review page showing the v2 version selector beside the asset name](/images/asset-review-preview-safe-zones-comments.png)
+</Frame>
+
+## Where versions appear
+
+You can see version context in several places:
+
+- Asset cards show the current version chip, such as `v2`.
+- The asset review breadcrumb includes a version picker.
+- The review page marks whether you are viewing the **Latest** version.
+- The **Activity** tab records uploads, version-stack changes, approvals, and metadata changes.
+- Compare mode loads every version in the stack.
+
+## Create a version stack
+
+Use versions when a new file is the next revision of the same asset, not a separate deliverable.
+
+<Steps>
+  <Step title="Upload the new revision">
+    Upload the revised file into the same project or folder as the original asset. Wait for the upload to fully finish before stacking it.
+  </Step>
+  <Step title="Drag it onto the original asset">
+    In the project **Assets** view, drag the new asset card onto the original asset card. Reloops attaches the new file to that asset's version stack and assigns the next version number.
+  </Step>
+  <Step title="Open the stacked asset">
+    Open the asset after stacking. The newest version appears first, and the version pill beside the asset name shows the active version number.
+  </Step>
+</Steps>
+
+<Frame caption="Versioned asset cards show a version badge, such as v1 or v2, in the card header.">
+  ![Assets view filtered to In review status with a version badge on the asset card](/images/quick-view-status-in-review-grid.png)
+</Frame>
+
+For the cleanest review and compare experience, keep a version stack within the same media family, such as image revisions with image revisions or video revisions with video revisions. If you are uploading through the API or CLI, pass the existing asset as the parent so the new upload lands in the same version chain immediately. See [Reloops CLI and Public API](/developers/reloops-cli-and-public-api) for developer workflows.
+
+## Switch versions
+
+Open an asset, then click the version pill beside the asset name, such as **v2**. Pick any version to open that exact revision. Comments and annotations shown in the side panel stay tied to the selected version.
+
+If you are reviewing an older version, Reloops warns before you request revisions against it so you do not accidentally send work backward.
+
+## Open compare mode
+
+Compare mode only appears when an asset has at least two versions. If the asset has one version, the review page shows a disabled **v1** pill and asset cards do not show a **Compare** action.
+
+<Steps>
+  <Step title="Open from the review page">
+    Open a versioned asset, click the **v2** version pill beside the asset name, then select **Compare versions** at the bottom of the menu.
+  </Step>
+  <Step title="Open from an asset card">
+    In the project **Assets** view or workspace asset search, hover a multi-version asset card, open the three-dot menu in the top-right corner, then choose **Compare**.
+  </Step>
+  <Step title="Confirm the compare page loaded">
+    Compare mode opens at `/workspace/:workspaceId/projects/:projectId/assets/:parentAssetId/compare` for project assets, or `/workspace/:workspaceId/assets/:parentAssetId/compare` from workspace search.
+  </Step>
+</Steps>
+
+<Frame caption="Compare mode shows two versions side by side with version-aware comments.">
+  ![Asset review comparing two versions with the comments panel](/images/asset-review-compare-versions-comments.png)
+</Frame>
+
+In compare mode you can:
+
+- Select **Version A** and **Version B** from dropdowns.
+- Play video versions side by side.
+- Compare image versions side by side.
+- Filter the comment panel to all comments, the left version, or the right version.
+- Review comments with version labels when both sides are visible.
+
+Use compare mode before approval to confirm requested changes were addressed and that the latest version is the one you intend to approve or share.
+
+Compare mode is for versions in the same asset stack. It does not open by selecting two unrelated asset cards.
+
+## Manage a version stack
+
+Use **Manage versions** from an asset card or the review-page version dropdown when you need to reorder or detach versions.
+
+<Steps>
+  <Step title="Open the version menu">
+    Open an asset with more than one version and choose **Manage versions**.
+  </Step>
+  <Step title="Reorder versions">
+    Drag versions into the intended order. The top item becomes the newest version number.
+  </Step>
+  <Step title="Detach a version if needed">
+    Remove a version from the stack when it should become independent work.
+  </Step>
+  <Step title="Save">
+    Reloops updates version numbers and records the change in the asset activity history.
+  </Step>
+</Steps>
+
+## If you cannot find Compare
+
+- Confirm the asset has more than one version. Look for a version pill such as **v2** on the review page or a version badge on the asset card.
+- Open the asset first if you are in a filtered quick view. The review page exposes the version menu beside the asset name.
+- Hover the asset card before looking for the three-dot menu. Card actions are hidden until hover or keyboard focus.
+- Use **Manage versions** only to reorder or detach versions. Use **Compare versions** to enter the side-by-side review screen.
+
+## Share a specific version
+
+Asset share links are locked to the version that is open when the link is created. Future uploads do not change what that link shows. To share a newer revision, open that version and create a new share link.

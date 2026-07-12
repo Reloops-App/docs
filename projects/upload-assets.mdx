@@ -1,7 +1,7 @@
 ---
 title: "Upload Assets to a Reloops Project: Formats and Steps"
 sidebarTitle: "Upload Assets"
-description: "Upload image and video files to a Reloops project using drag and drop or the file browser, and learn which formats are supported for review."
+description: "Upload files to a Reloops project using drag and drop, file browser, or folder upload, and learn which formats are supported for review."
 ---
 
 Uploading assets is how work begins inside a project. Once a file is uploaded, it becomes an asset that you can preview, comment on, annotate, and track through the review workflow. You can upload at any time - there is no limit on how many times you can add files to an existing project.
@@ -23,13 +23,13 @@ Open the project you want to add files to, then follow these steps.
     Click the **Upload** button in the top-right corner of the Assets view. This opens the upload options menu.
   </Step>
   <Step title="Select Upload Files or Upload Folder">
-    Choose **Upload Files** to select individual files, or **Upload Folder** to keep a folder-based upload grouped together.
+    Choose **Upload Files** to select individual files, or **Upload Folder** to preserve a local folder hierarchy.
   </Step>
   <Step title="Add your files">
     Either drag files from your computer and drop them into the upload area, or click **Browse files** to open your device's file picker and select files manually. Both methods support uploading multiple files at once.
   </Step>
   <Step title="Wait for processing">
-    Each file appears as an asset card in the Files view as soon as it finishes uploading. Large batches process quickly, so you can upload many files at once without waiting.
+    Each file appears as an asset card in the Assets view as soon as it finishes uploading. Large batches process quickly, so you can upload many files at once without waiting.
   </Step>
 </Steps>
 
@@ -37,11 +37,17 @@ Open the project you want to add files to, then follow these steps.
   ![Project Assets view with the Upload menu open](/images/project-assets-upload-menu.png)
 </Frame>
 
+<Frame caption="Upload walkthrough from selecting files through project asset creation.">
+  <video controls muted playsInline preload="metadata" style={{ width: "100%", borderRadius: "8px" }}>
+    <source src="/videos/upload-asset.mp4" type="video/mp4" />
+  </video>
+</Frame>
+
 ## Supported file formats
 
-Reloops supports common image and video formats for review.
+Reloops supports common creative file types. Images, videos, PDFs, and website captures get dedicated review surfaces. Other files can still be stored, organized, downloaded, tagged, and shared as project assets.
 
-<CardGroup cols={2}>
+<CardGroup cols={3}>
   <Card title="Images" icon="image">
     - JPG
     - PNG
@@ -56,6 +62,13 @@ Reloops supports common image and video formats for review.
     - WEBM
     - MKV
   </Card>
+
+  <Card title="Documents and other files" icon="file">
+    - PDF
+    - Audio files
+    - Design/source files
+    - Other downloadable assets
+  </Card>
 </CardGroup>
 
 ## What happens after upload
@@ -63,17 +76,35 @@ Reloops supports common image and video formats for review.
 After your files finish uploading:
 
 - Each file becomes an **asset** inside the project.
-- Assets appear immediately as cards in the **Files view**.
+- Assets appear immediately as cards in the **Assets view**.
 - Every asset starts with a status of **No status** by default.
 - Assets are searchable, filterable, and ready to be assigned for review.
 
 From the asset card you can open the full review interface to start leaving comments and annotations.
 
+## Upload a new version
+
+When a new upload is a revision of an existing asset, keep it in the same version stack instead of leaving it as a separate card.
+
+<Steps>
+  <Step title="Upload the revised file">
+    Upload the new file into the project and wait until its asset card appears in the Assets view.
+  </Step>
+  <Step title="Stack it on the original">
+    Drag the new asset card onto the original asset card. Reloops assigns the next version number and keeps the stack in the original asset's project and folder.
+  </Step>
+  <Step title="Review or compare">
+    Open the stacked asset to switch versions, manage the stack, or enter compare mode.
+  </Step>
+</Steps>
+
+For details, see [Version History and Compare Mode](/review/version-history-and-compare).
+
 <Tip>
   **Upload tips for a smoother review round:**
 
-  - Confirm you are inside the correct project before uploading - assets cannot be moved between projects after upload.
+  - Confirm you are inside the best starting project before uploading. You can move or copy assets later, but the right starting location keeps the first review round clearer.
   - Use clear, descriptive file names so teammates can identify assets without opening each one.
-  - Upload related files together in a single batch to keep the Files view tidy and reviews organized.
+  - Upload related files together in a single batch to keep the Assets view tidy and reviews organized.
   - Use **Upload Folder** when your files are already organized into folders on your computer - it preserves the folder grouping inside the project.
 </Tip>

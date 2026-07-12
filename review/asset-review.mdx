@@ -6,8 +6,14 @@ description: "Use the asset review page to view the current version, leave feedb
 
 The asset review page is where feedback and decisions stay attached to the asset being reviewed. Open any asset in a project and you land here - everything your team needs to evaluate a version, respond to comments, and move the work forward is in one place.
 
-<Frame caption="Compare two versions side by side while reading the comment thread.">
-  ![Asset review comparing two versions with the comments panel](/images/asset-review-compare-versions-comments.png)
+<Frame caption="The version pill beside the asset name opens version actions, including Compare versions when the asset has multiple versions.">
+  ![Asset review page showing the v2 version selector beside the asset name](/images/asset-review-preview-safe-zones-comments.png)
+</Frame>
+
+<Frame caption="The asset review surface keeps preview, comments, status, assignment, and approval controls together.">
+  <video controls muted playsInline preload="metadata" style={{ width: "100%", borderRadius: "8px" }}>
+    <source src="/videos/review-asset-v2.mp4" type="video/mp4" />
+  </video>
 </Frame>
 
 ## What you can do from the review page
@@ -26,7 +32,7 @@ The asset review page is where feedback and decisions stay attached to the asset
   </Card>
 
   <Card title="Change the review status" icon="tag">
-    Update the asset's status to reflect where it is in your workflow - for example, move it from **In Review** to **Changes Requested**.
+    Update the asset's status to reflect where it is in your workflow - **No status**, **Needs review**, **In review**, or **Approved**.
   </Card>
 
   <Card title="Approve the current version" icon="circle-check">
@@ -37,6 +43,8 @@ The asset review page is where feedback and decisions stay attached to the asset
     Flag that changes are needed. Pairing a revision request with timestamped or annotated comments gives the editor clear, actionable direction.
   </Card>
 </CardGroup>
+
+For file-type-specific guidance, see [Review Images, Videos, and Screenshots](/review/review-images-videos-and-screenshots).
 
 <Frame caption="Leaving a timecoded comment alongside a request-revision action.">
   ![Asset review showing a timecoded comment and a request revision action](/images/asset-review-timecoded-comment-request-revision.png)
@@ -49,3 +57,13 @@ The asset review page is where feedback and decisions stay attached to the asset
 ## Share from the review page
 
 You can generate an asset share link directly from the review page without leaving the asset. Select **Share** to open the link creation modal, configure your link settings, and send the link to an external reviewer. See [Create and Send Asset Share Links](/review/share-links) for the full steps and options.
+
+## Version history
+
+If an asset has multiple versions, use the version pill beside the asset name, such as **v2**, to switch revisions, manage the stack, or open compare mode. Choose **Compare versions** from that menu to enter the side-by-side view.
+
+<Frame caption="Compare mode opens after selecting Compare versions from a multi-version asset.">
+  ![Asset review comparing two versions with the comments panel](/images/asset-review-compare-versions-comments.png)
+</Frame>
+
+See [Version History and Compare Mode](/review/version-history-and-compare) for the full workflow.

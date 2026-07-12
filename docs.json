@@ -65,6 +65,7 @@
           "projects/upload-assets",
           "projects/folders-and-organization",
           "projects/project-assets-view",
+          "projects/bulk-actions-and-asset-reuse",
           "projects/kanban-status-workflow"
         ]
       },
@@ -82,10 +83,20 @@
         "expanded": true,
         "pages": [
           "review/asset-review",
+          "review/review-images-videos-and-screenshots",
+          "review/version-history-and-compare",
           "review/leave-comments",
           "review/website-review",
           "review/share-links",
           "review/project-reviewers-and-links"
+        ]
+      },
+      {
+        "group": "Developers & Agents",
+        "icon": "bot",
+        "pages": [
+          "developers/ai-agents-and-developer-keys",
+          "developers/reloops-cli-and-public-api"
         ]
       },
       {

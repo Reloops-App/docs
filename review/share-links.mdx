@@ -8,7 +8,7 @@ An asset share link is the simplest way to send a single asset to someone outsid
 
 ## Create an asset share link
 
-<Frame caption="The Create Share Link modal lets you lock the version, set expiry, and toggle downloads.">
+<Frame caption="The Create Share Link modal shows the locked version, expiration setting, and download permission.">
   ![Create share link modal on the asset review page](/images/asset-review-create-share-link-modal.png)
 </Frame>
 
@@ -22,8 +22,7 @@ An asset share link is the simplest way to send a single asset to someone outsid
   <Step title="Configure the link settings">
     Choose your options before generating the link:
 
-    - **Lock to current version** - pins the link to the version open right now, so future uploads do not change what the reviewer sees
-    - **Expiration date** - set a date after which the link stops working; leave this blank if the link should stay active indefinitely
+    - **Link expiration** - choose **Never expires**, **7 days**, **30 days**, or a custom date
     - **Allow downloads** - enable this if the reviewer is allowed to download the file, or leave it off to keep the asset view-only
   </Step>
   <Step title="Generate and copy the link">
@@ -32,7 +31,7 @@ An asset share link is the simplest way to send a single asset to someone outsid
 </Steps>
 
 <Note>
-  Locking the link to the current version ensures the reviewer sees exactly the version you intended to send. If you upload a new version after sharing the link and the link is **not** version-locked, the reviewer will see the updated file - which may not be what you want during an active review cycle.
+  Asset share links are always locked to the version open when you create the link. Future uploads do not change what the reviewer sees. To share a newer revision, open that version and create a new link.
 </Note>
 
 ## Checklist before sending
@@ -44,4 +43,4 @@ Run through these points before you share the link:
 - **Downloads are configured** to match what you have agreed with the recipient
 - **Link is sent only to the intended reviewer** - anyone with the URL can open the public share page, so treat the link as you would any shared credential
 
-To view all active links for a project and check their expiry dates, open the **Links** tab on the project page. See [Manage Project Reviewers and Share Links](/review/project-reviewers-and-links) for details.
+To view all active links for a project and check their expiration dates, open the **Links** tab on the project page. See [Manage Project Reviewers and Share Links](/review/project-reviewers-and-links) for details.

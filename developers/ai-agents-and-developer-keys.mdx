@@ -1,0 +1,64 @@
+---
+title: "AI Agents and Developer Keys"
+sidebarTitle: "AI Agents & Keys"
+description: "Create AI agent identities, copy developer keys, assign assets to agents, and revoke access when an integration is no longer needed."
+---
+
+AI agents in Reloops are team-level developer identities. Each agent has a name, provider label, optional icon, and a `reloops_live_...` developer key that can call the public API. Use agents when an automation, model workflow, or external tool needs to pick up review work, leave comments, upload versions, or move assets through the workflow.
+
+<Frame caption="Team management includes the AI Agents & Developer Keys registry above organization members.">
+  ![Reloops team management page showing AI agents and member rows](/images/team-management-ai-agents-members.png)
+</Frame>
+
+## Who can manage keys
+
+Only organization owners and admins can create, view, or revoke developer keys. Members can see assigned work in the product, but they cannot create API credentials for agents.
+
+## Create an AI agent
+
+<Steps>
+  <Step title="Open Team Management">
+    Go to `/workspace/:workspaceId/teams` or click **Manage Team** in the sidebar.
+  </Step>
+  <Step title="Add an AI agent">
+    In **AI Agents & Developer Keys**, click **Add AI Agent**.
+  </Step>
+  <Step title="Name the agent">
+    Use a clear label such as `Open Claw QA`, `n8n Publisher`, or `Video Revision Agent` so teammates can recognize the actor in comments, assignments, and activity logs.
+  </Step>
+  <Step title="Choose a provider">
+    Pick a preset such as **Open Claw**, **OpenAI**, **Claude**, **Gemini**, **Zapier**, or **n8n**, or use **Custom AI Agent**.
+  </Step>
+  <Step title="Generate and store the key">
+    Click **Get Developer Key**. Copy the raw key immediately. Reloops stores only the hashed secret after creation; the browser can reveal it again only if this local browser still has the cached copy.
+  </Step>
+</Steps>
+
+<Warning>
+  Treat a developer key like a password. If a key is exposed, revoke it from the agent registry and create a new one.
+</Warning>
+
+## Assign work to an agent
+
+Agents appear anywhere an asset can be assigned:
+
+- From a project asset card, open the asset and use **Assign**.
+- From the asset review page, choose the agent in the assignment menu.
+- From the API or CLI, update `assigned_to_api_key_id`.
+
+Assigned agents can query their own queue through the API or CLI. Assets with **Needs review** are the normal handoff point for work an agent should pick up.
+
+## Revoke or rotate a key
+
+Use **Revoke** in the agent registry when an integration is retired, a secret is exposed, or you want to rotate credentials. Revoking a key prevents future API calls from that secret. It does not delete comments, uploads, or activity history created by the agent.
+
+## What agent actions are recorded
+
+Reloops records API-key activity in the same places as human activity:
+
+- Asset comments show the agent as the author.
+- Uploaded files and versions keep the agent as the uploader.
+- Status changes, assignments, metadata edits, and version-stack changes appear in the asset **Activity** tab.
+- Project and asset views show agent assignments alongside human assignees.
+
+For CLI setup and endpoint coverage, see [Reloops CLI and Public API](/developers/reloops-cli-and-public-api).

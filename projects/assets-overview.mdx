@@ -25,9 +25,11 @@ Open any asset card to access its full review interface. From there you can:
 - **Leave comments** to share feedback with your team.
 - **Add annotations** to point to exact areas of the file.
 - **Assign** the asset to a teammate responsible for action.
+- **Assign** the asset to an AI agent when an automation should pick up the work.
 - **Update its status** to reflect where it is in the review process.
 - **Approve** the asset once the current version is accepted.
 - **Download** the original file at any time.
+- **Compare versions** when the asset has more than one revision.
 - **View history and details** to see all past activity on the asset.
 
 All feedback and activity stay attached to the asset itself, not to a person's inbox or a separate thread.
@@ -45,7 +47,7 @@ Every asset moves through statuses that reflect its current state in the review 
     The asset is ready and someone should review it. Setting this status signals to reviewers that the file is waiting for their attention.
   </Accordion>
 
-  <Accordion title="In Review" icon="circle-half-stroke">
+  <Accordion title="In review" icon="circle-half-stroke">
     Feedback is actively being given on this asset. The asset is open for comments and annotations from the team.
   </Accordion>
 
@@ -54,26 +56,28 @@ Every asset moves through statuses that reflect its current state in the review 
   </Accordion>
 </AccordionGroup>
 
-Statuses appear on each asset card in the Files view and determine which column an asset occupies in the Kanban view.
+Statuses appear on each asset card in the Assets view and determine which column an asset occupies in the Kanban view.
 
 ## Asset views inside a project
 
 Your project gives you two ways to look at your assets. Both views always stay in sync - updating an asset in one view immediately reflects in the other.
 
-### Files view
+### Assets view
 
-The Files view displays assets as cards arranged in a grid. Use it to browse your uploads, search for a specific file, filter by status or assignee, and take quick actions without opening each asset individually.
+The Assets view displays assets as cards arranged in a grid. Use it to browse your uploads, search for a specific file, filter by status or assignee, and take quick actions without opening each asset individually.
 
-<Frame caption="Image assets in the Files grid.">
-  ![Files view showing image asset cards in a grid](/images/quick-view-images-grid.png)
+Hover an asset card to reveal its three-dot menu. Multi-version cards include **Compare** in that menu; single-version cards do not.
+
+<Frame caption="Image assets in the Assets grid.">
+  ![Assets view showing image asset cards in a grid](/images/quick-view-images-grid.png)
 </Frame>
 
-<Frame caption="Video assets in the Files grid.">
-  ![Files view showing video asset cards in a grid](/images/quick-view-videos-grid.png)
+<Frame caption="Video assets in the Assets grid.">
+  ![Assets view showing video asset cards in a grid](/images/quick-view-videos-grid.png)
 </Frame>
 
 <Frame caption="Filtering the grid down to assets currently in review.">
-  ![Files view filtered to In Review status](/images/quick-view-status-in-review-grid.png)
+  ![Assets view filtered to In review status](/images/quick-view-status-in-review-grid.png)
 </Frame>
 
 ### Kanban view
@@ -88,5 +92,6 @@ Assets are built for team collaboration. On any asset you can:
 - Use **annotations** to highlight exact regions of an image or frame of a video.
 - **Mark feedback as resolved** to keep conversations tidy.
 - **Invite reviewers** to participate directly in the review.
+- **Share version-locked links** with people outside your workspace.
 
 This keeps all conversations clear, contextual, and actionable in one place.
