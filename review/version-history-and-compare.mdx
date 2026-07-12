@@ -6,8 +6,8 @@ description: "Manage asset version stacks, switch between versions, compare two 
 
 Reloops keeps revisions together as an asset version stack. Each version keeps its own preview, comments, activity, status, uploader, and timestamp, while the stack gives your team one place to track the full review history.
 
-<Frame caption="On the asset review page, click the version pill beside the asset name, such as v2, to open version actions.">
-  ![Asset review page showing the v2 version selector beside the asset name](/images/asset-review-preview-safe-zones-comments.png)
+<Frame caption="Before stacking, revised uploads appear as separate asset cards in the project Assets view.">
+  ![Project Assets view showing two separate Maria UGC video assets before stacking](/images/versions/1..png)
 </Frame>
 
 ## Where versions appear
@@ -36,8 +36,10 @@ Use versions when a new file is the next revision of the same asset, not a separ
   </Step>
 </Steps>
 
-<Frame caption="Versioned asset cards show a version badge, such as v1 or v2, in the card header.">
-  ![Assets view filtered to In review status with a version badge on the asset card](/images/quick-view-status-in-review-grid.png)
+<Frame caption="Drag the revised asset card onto the original asset card to create one version stack.">
+  <video controls muted playsInline preload="metadata" style={{ width: "100%", borderRadius: "8px" }}>
+    <source src="/images/versions/2.version-1783874200593.mp4" type="video/mp4" />
+  </video>
 </Frame>
 
 For the cleanest review and compare experience, keep a version stack within the same media family, such as image revisions with image revisions or video revisions with video revisions. If you are uploading through the API or CLI, pass the existing asset as the parent so the new upload lands in the same version chain immediately. See [Reloops CLI and Public API](/developers/reloops-cli-and-public-api) for developer workflows.
@@ -64,8 +66,16 @@ Compare mode only appears when an asset has at least two versions. If the asset 
   </Step>
 </Steps>
 
+<Frame caption="Open the three-dot menu on a multi-version asset card to find Compare and Manage versions.">
+  ![Asset card menu showing Compare, Edit, Download, Manage versions, and other actions](/images/versions/click3Dot.png)
+</Frame>
+
+<Frame caption="Choose Compare from the asset card menu to enter side-by-side review.">
+  ![Asset card menu with the Compare option highlighted](/images/versions/hoveroncompareindropdown.png)
+</Frame>
+
 <Frame caption="Compare mode shows two versions side by side with version-aware comments.">
-  ![Asset review comparing two versions with the comments panel](/images/asset-review-compare-versions-comments.png)
+  ![Reloops compare versions page showing two Maria UGC versions side by side with version-aware comments](/images/versions/Reloops_comparison_mode.png)
 </Frame>
 
 In compare mode you can:
@@ -83,6 +93,10 @@ Compare mode is for versions in the same asset stack. It does not open by select
 ## Manage a version stack
 
 Use **Manage versions** from an asset card or the review-page version dropdown when you need to reorder or detach versions.
+
+<Frame caption="Manage version stack shows every version in order, with drag handles and detach controls.">
+  ![Manage version stack dialog showing v2 and v1 assets with reorder handles and remove controls](/images/versions/manage_version_stack.png)
+</Frame>
 
 <Steps>
   <Step title="Open the version menu">
