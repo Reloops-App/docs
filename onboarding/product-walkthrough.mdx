@@ -10,7 +10,7 @@ Use this walkthrough when you want a quick visual map of the product before you 
   <Step title="Workspaces - /workspaces">
     **Workspaces** (`/workspaces`) is the first screen you see after signing in. It lists every workspace you belong to as a card grid. Select any card to enter that workspace, or choose **New Workspace** to create one. Use a client, brand, or team name so the workspace is easy to identify at a glance.<br />
 
-    <Frame>
+    <Frame caption="The workspaces index lists every workspace you belong to.">
       <img
         src="/images/Workspaces.png"
         alt="Reloops workspaces index page with a grid of workspace cards"
@@ -49,7 +49,7 @@ Use this walkthrough when you want a quick visual map of the product before you 
   <Step title="Project Assets - /workspace/:workspaceId/projects/:projectId">
     **Project assets** (`/workspace/:workspaceId/projects/:projectId`) is the default view inside a project. It lists folders above asset cards. Select any asset card to open it for review.
 
-    <Frame>
+    <Frame caption="Folders, assets, statuses, and quick filters live together in the Assets view.">
       ![Prepared Files Folder](/images/prepared-files-folder.png)
     </Frame>
 
@@ -64,44 +64,72 @@ Use this walkthrough when you want a quick visual map of the product before you 
 
     <Frame caption="The Kanban board groups review-stage assets by status.">
       <img
-        src="/images/kanban-board.png"
         alt="Reloops Kanban board with status columns"
         lightAlt="Reloops Kanban board with status columns"
         darkAlt="Reloops Kanban board with status columns"
+        src="/images/kanban-board.png"
         className="dark:hidden"
       />
       <img
-        src="/images/Kanban-board.png"
         alt="Reloops Kanban board with status columns"
         lightAlt="Reloops Kanban board with status columns"
         darkAlt="Reloops Kanban board with status columns"
+        src="/images/Kanban-board.png"
         className="hidden dark:block"
       />
     </Frame>
   </Step>
   <Step title="Reviewers and Links Tabs - /workspace/:workspaceId/projects/:projectId">
-    The **Reviewers** and **Links** tabs (`/workspace/:workspaceId/projects/:projectId`) live alongside the Assets and Kanban views. Use the **Reviewers** tab to see every guest reviewer you have added to the project and the assets assigned to them. Use the **Links** tab to see all active share links created for assets in this project.
+    The **Reviewers** and **Links** tabs (`/workspace/:workspaceId/projects/:projectId`) live alongside the Assets and Kanban views. Use the **Reviewers** tab to see every guest reviewer you have added to the project and the assets assigned to them.<br />
 
-    <Frame caption="The Reviewers tab lists guests and the assets tied to them.">
-      ![Project Reviewers tab listing a guest reviewer](/images/project-reviewers-tab-guest-reviewer.png)
+    <Frame caption="The Links tab audits asset share links for the project.">
+      ![Project Reviewers Tab Guest Reviewer](/images/project-reviewers-tab-guest-reviewer.png)
     </Frame>
+
+    <br /> Use the **Links** tab to see all active share links created for assets in this project.
 
     <Frame caption="The Links tab audits asset share links for the project.">
       ![Project share links tab listing an active link](/images/project-share-links-tab-active-link.png)
     </Frame>
   </Step>
   <Step title="Collections - /workspace/:workspaceId/collections and /workspace/:workspaceId/collections/:collectionId">
-    **Collections** (`/workspace/:workspaceId/collections`) lets you build curated visual galleries from assets that already exist in your projects. Open a collection, select a source folder, choose the assets you want to include, and then adjust appearance settings - background, layout, and branding - to match your delivery needs. The source files stay in their original projects.
+    **Collections** (`/workspace/:workspaceId/collections`) lets you build curated visual galleries from assets that already exist in your projects. Open a collection, select a source folder, choose the assets you want to include, and then adjust appearance settings - background, layout, and branding - to match your delivery needs. The source files stay in their original projects.<br />
 
     <Frame caption="A collection can present selected project assets as a clean gallery.">
-      ![Reloops collection displaying curated assets in a styled grid](/images/collection-starry-night-grid.png)
+      <img
+        src="/images/Collections.png"
+        alt="Reloops collection displaying curated assets in a styled grid"
+        lightAlt="Reloops collection displaying curated assets in a styled grid"
+        darkAlt="Reloops collection displaying curated assets in a styled grid"
+        className="dark:hidden"
+      />
+      <img
+        src="/images/Collections-1.png"
+        alt="Reloops collection displaying curated assets in a styled grid"
+        lightAlt="Reloops collection displaying curated assets in a styled grid"
+        darkAlt="Reloops collection displaying curated assets in a styled grid"
+        className="hidden dark:block"
+      />
     </Frame>
   </Step>
   <Step title="Asset Review - /workspace/:workspaceId/projects/:projectId/assets/:assetId">
-    The **asset review page** (`/workspace/:workspaceId/projects/:projectId/assets/:assetId`) is the core review surface. Open any asset here to play or view the file, leave timestamped or pinned comments, add annotations, assign the asset to a team member, and update its status. Reviewers can approve the asset or request revisions directly from this screen.
+    The **asset review page** (`/workspace/:workspaceId/projects/:projectId/assets/:assetId`) is the core review surface. Open any asset here to play or view the file, leave timestamped or pinned comments, add annotations, assign the asset to a team member, and update its status. Reviewers can approve the asset or request revisions directly from this screen.<br />
 
     <Frame caption="The review surface supports view, comment, and draw modes.">
-      ![Asset preview with safe zones and pinned comments](/images/asset-review-preview-safe-zones-comments.png)
+      <img
+        src="/images/asset-review.png"
+        alt="Asset preview with safe zones and pinned comments"
+        lightAlt="Asset preview with safe zones and pinned comments"
+        darkAlt="Asset preview with safe zones and pinned comments"
+        className="dark:hidden"
+      />
+      <img
+        src="/images/asset-review-1.png"
+        alt="Asset preview with safe zones and pinned comments"
+        lightAlt="Asset preview with safe zones and pinned comments"
+        darkAlt="Asset preview with safe zones and pinned comments"
+        className="hidden dark:block"
+      />
     </Frame>
   </Step>
   <Step title="Share an Asset - /workspace/:workspaceId/projects/:projectId/assets/:assetId and /share/:token">
@@ -126,11 +154,13 @@ Use this walkthrough when you want a quick visual map of the product before you 
     </Frame>
   </Step>
   <Step title="Notifications, Team, and Settings - /workspace/:workspaceId/teams and /workspace/:workspaceId/settings">
-    The **notifications panel**, **team management page** (`/workspace/:workspaceId/teams`), and **workspace settings** (`/workspace/:workspaceId/settings`) cover the operational side of a workspace. Check notifications to stay on top of review activity and file updates. Use the team page to manage members, project reviewers, AI agents, and developer keys. Use settings to update the workspace profile, review billing limits, monitor storage, and track AI processing.
+    The **notifications panel**, **team management page** (`/workspace/:workspaceId/teams`), and **workspace settings** (`/workspace/:workspaceId/settings`) cover the operational side of a workspace. Check notifications to stay on top of review activity and file updates. Use the team page to manage members, project reviewers, AI agents, and developer keys. <br />
 
     <Frame caption="Team management includes AI agents, developer keys, organization members, invitations, and project reviewers.">
-      ![Reloops team management page showing AI agents and member rows](/images/team-management-ai-agents-members.png)
+      ![Team Management Ai Agents Members](/images/team-management-ai-agents-members.png)
     </Frame>
+
+    <br />Use settings to update the workspace profile, review billing limits, monitor storage, and track AI processing.
 
     <Frame caption="Workspace settings shows plan, storage, and AI processing limits.">
       ![Reloops workspace settings page showing billing limits and plan usage](/images/workspace-settings-billing-limits.png)
