@@ -159,3 +159,7 @@ nav-logo img,
 [data-product-guide-index] :is(h1, h2, h3, h4, h5, h6, p, span, a, div) {
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
+
+#content-container #footer {
+  padding-bottom: 2rem !important;
+}

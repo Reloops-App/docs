@@ -46,21 +46,12 @@
         ]
       },
       {
-        "group": "Workspace & Team",
-        "icon": "building-2",
-        "expanded": true,
-        "pages": [
-          "workspace/workspaces",
-          "workspace/team-and-settings",
-          "workspace/notifications"
-        ]
-      },
-      {
         "group": "Projects & Assets",
         "icon": "folder-open",
         "expanded": true,
         "pages": [
           "projects/create-a-project",
+          "projects/archive-projects",
           "projects/assets-overview",
           "projects/upload-assets",
           "projects/folders-and-organization",
@@ -78,6 +69,15 @@
         ]
       },
       {
+        "group": "Collections",
+        "icon": "layout-grid",
+        "expanded": true,
+        "pages": [
+          "collections/collections-overview",
+          "collections/build-and-style-collections"
+        ]
+      },
+      {
         "group": "Review & Sharing",
         "icon": "message-circle",
         "expanded": true,
@@ -92,20 +92,21 @@
         ]
       },
       {
+        "group": "Workspace & Team",
+        "icon": "building-2",
+        "expanded": true,
+        "pages": [
+          "workspace/workspaces",
+          "workspace/team-and-settings",
+          "workspace/notifications"
+        ]
+      },
+      {
         "group": "Developers & Agents",
         "icon": "bot",
         "pages": [
           "developers/ai-agents-and-developer-keys",
           "developers/reloops-cli-and-public-api"
-        ]
-      },
-      {
-        "group": "Collections",
-        "icon": "layout-grid",
-        "expanded": true,
-        "pages": [
-          "collections/collections-overview",
-          "collections/build-and-style-collections"
         ]
       },
       {
