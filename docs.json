@@ -54,6 +54,7 @@
           "projects/archive-projects",
           "projects/assets-overview",
           "projects/upload-assets",
+          "projects/supported-file-types",
           "projects/folders-and-organization",
           "projects/project-assets-view",
           "projects/bulk-actions-and-asset-reuse",

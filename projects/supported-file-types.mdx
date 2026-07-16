@@ -1,0 +1,81 @@
+---
+title: "Supported file types and extensions"
+sidebarTitle: "Supported File Types"
+description: "Reference the file extensions, MIME types, upload limits, and review behavior supported by Reloops."
+---
+
+Reloops is built for creative review files first. The web upload picker is configured for common image, video, PDF, audio, and text/data files. Larger uploads use the same Supabase `upload-b2` flow behind the scenes and can use multipart upload up to **5GB per file**.
+
+## Quick reference
+
+| Category | Extensions | MIME types | In-app behavior |
+| --- | --- | --- | --- |
+| Images | `.jpg`, `.jpeg`, `.png`, `.gif`, `.webp`, `.svg` | `image/jpeg`, `image/png`, `image/gif`, `image/webp`, `image/svg+xml` | Image review, annotations, comments, thumbnails, sharing, and compare mode |
+| Videos | `.mp4`, `.mov`, `.qt`, `.m4v`, `.webm`, `.mkv` | `video/mp4`, `video/quicktime`, `video/x-m4v`, `video/webm`, `video/x-matroska` | Video review, playback, timecoded comments, thumbnails, sharing, and compare mode |
+| PDFs | `.pdf` | `application/pdf` | PDF review, page preview, comments, sharing, and compare mode |
+| Audio | `.mp3`, `.m4a`, `.mp4`, `.wav`, `.flac`, `.aac`, `.ogg` | `audio/mpeg`, `audio/mp4`, `audio/wav`, `audio/x-wav`, `audio/flac`, `audio/aac`, `audio/ogg` | Stored as project assets with metadata, tags, sharing, and download |
+| Text and data | `.txt`, `.csv`, `.json` | `text/plain`, `text/csv`, `application/json` | Stored as project assets with metadata, tags, sharing, search, and download |
+
+<Note>
+  Browser file pickers use MIME types, so some extensions are accepted because the browser reports a supported MIME type. For example, `.jpg` and `.jpeg` both map to `image/jpeg`.
+</Note>
+
+## Upload limits
+
+- The maximum file size is **5GB per file**.
+- The web app automatically uses multipart upload for large files.
+- Upload batches can include multiple files and folders.
+- Folder upload preserves the folder structure inside the project.
+- Empty files and files with missing names are skipped.
+
+## Review support by type
+
+Different file types get different review surfaces.
+
+| Capability | Images | Videos | PDFs | Audio | Text/data |
+| --- | --- | --- | --- | --- | --- |
+| Project asset card | Yes | Yes | Yes | Yes | Yes |
+| Preview in review page | Yes | Yes | Yes | Limited | Limited |
+| Comments | Yes | Yes | Yes | Asset-level only | Asset-level only |
+| Drawing or annotation tools | Yes | No | No | No | No |
+| Timecoded comments | No | Yes | No | No | No |
+| Compare mode | Yes | Yes | Yes | No | No |
+| Share links and downloads | Yes | Yes | Yes | Yes | Yes |
+
+## Thumbnail and AI metadata behavior
+
+Reloops generates the best preview it can for supported review formats.
+
+- Images, videos, and PDFs can receive thumbnails.
+- Very large files may finish uploading before thumbnail processing completes.
+- Files without a dedicated preview can still be organized, tagged, shared, and downloaded.
+- AI metadata is best supported for images, videos, audio, text, documents, and design-like formats.
+
+## API and Supabase upload behavior
+
+The web app uploads through the Supabase Edge Function `upload-b2`.
+
+That upload API:
+
+- requires a valid user session or API key,
+- checks workspace access before signing or completing uploads,
+- stores the file in object storage,
+- records the provided `contentType` as the asset `mime_type`,
+- enforces **5GB** as the multipart upload maximum.
+
+The API does not maintain a separate extension allowlist. If you upload a file type outside the web picker through an API path, Reloops may store it as a generic downloadable asset, but preview, thumbnail, compare, and AI metadata support can be limited.
+
+## Not supported for review or AI processing
+
+These file types are not part of the supported web upload picker and are not processed by the AI metadata worker:
+
+| Type | Extensions |
+| --- | --- |
+| Archives and compressed packages | `.zip`, `.rar`, `.tar`, `.tgz`, `.gz`, `.bz2`, `.xz` |
+| Installers and disk images | `.dmg`, `.pkg`, `.iso` |
+| Executables and compiled artifacts | `.exe`, `.dll`, `.jar`, `.class`, `.wasm`, `.bin` |
+| Fonts | `.ttf`, `.otf`, `.eot`, `.woff`, `.woff2` |
+
+<Tip>
+  If a file uploads but does not show a rich preview, keep using the asset card for status, assignment, metadata, comments, sharing, and download.
+</Tip>
