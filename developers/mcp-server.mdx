@@ -1,0 +1,238 @@
+---
+title: "MCP Server"
+sidebarTitle: "MCP Server"
+description: "Connect Claude, Cursor, VS Code, Codex, Antigravity, or n8n to Reloops with the official MCP server, so any MCP-compatible agent can search, upload, review, and share directly."
+---
+
+[`@reloops/mcp-server`](https://www.npmjs.com/package/@reloops/mcp-server) is an [MCP](https://modelcontextprotocol.io) server for Reloops. It wraps the same public API used by developer keys, so any MCP-compatible agent can list workspaces, search and upload assets, leave comments, manage versions, and create share links, all from a prompt.
+
+The server runs locally as a subprocess of your MCP client (stdio transport). Your API key stays on your machine and is only ever sent to `api.reloops.app`.
+
+<Note>
+  `@reloops/mcp-server` is in beta. Tool names and behavior may still change before a stable `1.0` release.
+</Note>
+
+## Get a developer key
+
+The server authenticates with a `reloops_live_...` developer key, the same kind used by the CLI and public API. Create one from **Manage Team → AI Agents & Developer Keys**. See [AI Agents and Developer Keys](/developers/ai-agents-and-developer-keys#create-an-ai-agent) for the full walkthrough.
+
+## Connect your client
+
+Every client runs the same command under the hood: `npx -y @reloops/mcp-server`, with `RELOOPS_API_KEY` set to your developer key. Pick your client below for the exact file and config.
+
+<Tabs>
+  <Tab title="Claude">
+    Open **Settings → Developer → Edit Config** in Claude Desktop or Claude Code. This opens the config file below. Paste the block in, then restart the app.
+
+    ```json claude_desktop_config.json
+    {
+      "mcpServers": {
+        "reloops": {
+          "command": "npx",
+          "args": ["-y", "@reloops/mcp-server"],
+          "env": {
+            "RELOOPS_API_KEY": "your_key_here"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Claude Code">
+    Run this in your terminal. It registers the server for you, no file editing needed.
+
+    ```bash
+    claude mcp add reloops -e RELOOPS_API_KEY=your_key_here -- npx -y @reloops/mcp-server
+    ```
+  </Tab>
+  <Tab title="Cursor">
+    Add this file to your project, or create it at `~/.cursor/mcp.json` to enable it in every project.
+
+    ```json .cursor/mcp.json
+    {
+      "mcpServers": {
+        "reloops": {
+          "command": "npx",
+          "args": ["-y", "@reloops/mcp-server"],
+          "env": {
+            "RELOOPS_API_KEY": "your_key_here"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="VS Code">
+    Add this file to your project, or run **MCP: Add Server** from the Command Palette instead of editing it by hand.
+
+    ```json .vscode/mcp.json
+    {
+      "servers": {
+        "reloops": {
+          "type": "stdio",
+          "command": "npx",
+          "args": ["-y", "@reloops/mcp-server"],
+          "env": {
+            "RELOOPS_API_KEY": "your_key_here"
+          }
+        }
+      }
+    }
+    ```
+
+    VS Code uses `servers` at the top level, not `mcpServers`, and needs an explicit `"type": "stdio"` field.
+  </Tab>
+  <Tab title="Codex CLI">
+    Add this to your Codex config, or run the equivalent `codex mcp add` command instead of editing it by hand.
+
+    ```toml ~/.codex/config.toml
+    [mcp_servers.reloops]
+    command = "npx"
+    args = ["-y", "@reloops/mcp-server"]
+
+    [mcp_servers.reloops.env]
+    RELOOPS_API_KEY = "your_key_here"
+    ```
+  </Tab>
+  <Tab title="Antigravity CLI">
+    Add this file, or type `/mcp` in the prompt panel to manage servers interactively.
+
+    ```json ~/.gemini/config/mcp_config.json
+    {
+      "mcpServers": {
+        "reloops": {
+          "command": "npx",
+          "args": ["-y", "@reloops/mcp-server"],
+          "env": {
+            "RELOOPS_API_KEY": "your_key_here"
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="n8n">
+    Add an **MCP Client Tool** node and connect it to an AI Agent node. Fill in these fields:
+
+    | Field | Value |
+    | --- | --- |
+    | Connection Type | `Command Line (STDIO)` |
+    | Command | `npx` |
+    | Arguments | `-y @reloops/mcp-server` |
+    | Environment Variables | `RELOOPS_API_KEY=your_key_here` |
+
+    Your agent can now call the same tools listed below from inside the workflow.
+  </Tab>
+</Tabs>
+
+Any other MCP client that reads a JSON config file will use the same underlying command: `npx -y @reloops/mcp-server`, with `RELOOPS_API_KEY` set under `env`. Adjust the top-level key and file path for that client's own format.
+
+## Validate
+
+After connecting, ask your agent something like *"List my Reloops workspaces"* or *"What's still waiting on approval?"*. A structured response back from your workspace confirms the connection is working.
+
+## Configuration reference
+
+Environment variables the server reads, set under `env` in your client's config:
+
+<table>
+  <colgroup>
+    <col style={{width: "230px"}} />
+    <col />
+    <col />
+  </colgroup>
+  <thead>
+    <tr><th>Variable</th><th>Description</th><th>Required</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code style={{whiteSpace: "nowrap"}}>RELOOPS_API_KEY</code></td>
+      <td>Your <code style={{whiteSpace: "nowrap"}}>reloops_live_...</code> developer key</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td><code style={{whiteSpace: "nowrap"}}>RELOOPS_API_BASE_URL</code></td>
+      <td>Override the API base URL, for a non-default (e.g. self-hosted or staging) environment</td>
+      <td>No, defaults to <code>https://api.reloops.app/functions/v1</code></td>
+    </tr>
+    <tr>
+      <td><code style={{whiteSpace: "nowrap"}}>RELOOPS_MEDIA_BASE_URL</code></td>
+      <td>Override the media/download base URL</td>
+      <td>No, defaults to <code>https://media.reloops.app</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Available tools
+
+<Accordion title="33 tools across workspaces, projects, assets, versions, comments, shares, and collections">
+
+<div style={{overflowX: "auto"}}>
+<table style={{width: "max-content", minWidth: "100%"}}>
+  <thead>
+    <tr><th>Tool</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_workspaces</code></td><td>List workspaces the API key can access</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_create_workspace</code></td><td>Create a new workspace</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_projects</code></td><td>List projects, optionally scoped to a workspace</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_create_project</code></td><td>Create a project in a workspace</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_get_project_tree</code></td><td>Get a project's full folder/asset tree</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_update_project</code></td><td>Rename a project or set its status (Reloops has no hard project delete)</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_folders</code></td><td>List a project's top-level folders</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_create_folder</code></td><td>Create a folder in a project</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_delete_folder</code></td><td>Delete a folder and everything inside it</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_bulk_move_folders</code></td><td>Move multiple folders to another project (same workspace)</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_assets</code></td><td>List assets by project, or list/search (keyword or semantic) by workspace</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_get_asset</code></td><td>Get one asset's full details</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_update_asset</code></td><td>Update an asset's status, metadata, folder, or assignment</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_asset_versions</code></td><td>List every version in an asset's stack</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_stack_asset_version</code></td><td>Attach a standalone asset as a new version of another</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_delete_asset</code></td><td>Delete a single asset/version</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_delete_asset_stack</code></td><td>Delete an asset and every version stacked on it</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_bulk_move_assets</code></td><td>Move multiple asset stacks to another project (same workspace)</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_bulk_copy_assets</code></td><td>Copy multiple asset stacks to another project (same workspace)</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_upload_asset</code></td><td>Upload a local file as a new asset or new version</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_download_asset</code></td><td>Download an asset's bytes to a local file</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_comments</code></td><td>List an asset's review comments</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_create_comment</code></td><td>Leave a comment on an asset</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_create_share</code></td><td>Create a public share link for an asset or collection</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_shares</code></td><td>List existing share links</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_revoke_share</code></td><td>Revoke a share link</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_assigned_reviews</code></td><td>Poll the review queue assigned to this API key</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_collections</code></td><td>List saved collections in a workspace</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_create_collection</code></td><td>Create a filtered collection over a workspace/project/folder</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_get_collection</code></td><td>Get a collection's saved configuration</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_update_collection</code></td><td>Rename or reconfigure a collection</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_delete_collection</code></td><td>Delete a collection (not its underlying assets)</td></tr>
+    <tr><td><code style={{whiteSpace: "nowrap"}}>reloops_list_collection_items</code></td><td>Resolve a collection's filters and list its actual assets</td></tr>
+  </tbody>
+</table>
+</div>
+
+Semantic search (`reloops_list_assets` with `semantic: true`) currently falls back to Reloops' text-search behavior on the public API rather than true embedding search, that's Reloops' backend behavior, not a limitation of this tool.
+
+Not yet covered: multipart upload for files over 512 MiB, comment editing/deletion.
+
+</Accordion>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Tools not appearing in your client">
+    - Confirm the config file has valid JSON (or TOML for Codex CLI): a missing comma or brace stops the whole file from loading, not just the `reloops` entry.
+    - Restart the client after editing its config. Most clients only read MCP config on startup.
+    - Run `npx -y @reloops/mcp-server` directly in a terminal. If it hangs waiting on stdin without printing an error, the package installed and started correctly, the issue is in your client's config, not the server.
+  </Accordion>
+  <Accordion title="Authentication or permission errors">
+    - Confirm `RELOOPS_API_KEY` is set in the `env` block for your client, not just in your shell, most clients launch the server as a separate process that doesn't inherit your shell's environment.
+    - Check the key hasn't been revoked: go to **Manage Team → AI Agents & Developer Keys** and confirm the agent is still listed.
+    - Make sure the key is scoped to the workspace you're asking about. A developer key only sees what its organization can access.
+  </Accordion>
+  <Accordion title="npx fails or can't find the package">
+    - Confirm Node.js is installed and `npx` is on your `PATH` (`npx --version` in a terminal).
+    - The first run downloads the package fresh each time unless it's cached. If you're on a slow or restricted network, this can time out, try `npm install -g @reloops/mcp-server` and pointing `command` at the globally installed binary instead of `npx`.
+  </Accordion>
+</AccordionGroup>
+
+Need a scriptable path instead of an agent? See [Reloops CLI and Public API](/developers/reloops-cli-and-public-api).

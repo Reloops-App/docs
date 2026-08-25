@@ -107,6 +107,7 @@
         "icon": "bot",
         "pages": [
           "developers/ai-agents-and-developer-keys",
+          "developers/mcp-server",
           "developers/reloops-cli-and-public-api"
         ]
       },
