@@ -101,8 +101,6 @@ return only the zip. no commentary before or after."
 
 ![GPT-6 Astra running the batch prompt and returning a Download file / Download the ZIP link](/images/chatgpt-generate-batch-zip.png)
 
-You will not use all 100. Asking for the full batch means you can throw away 70 and still keep 30 you would not have written yourself.
-
 ## Step 2 - Store the scripts where the agent can read them
 
 Astra already handed you a zip of 100 script files, one per id, because the prompt in Step 1 asked for exactly that. Unzip it and you have precisely the structure you need: one file per script, each with its own id, so an agent can walk the list, generate a video for each, and write the result back next to the script it came from.
@@ -126,10 +124,6 @@ Astra already handed you a zip of 100 script files, one per id, because the prom
 Unzip the folder and upload the .md files into the Scripts folder in Reloops.
 
 On upload, Reloops reads each script and tags it: the hook structure, the format, the subject, plus a one-line summary.
-
-The folder becomes searchable with no extra work, and the Step 3 agent can pull just the POV scripts or just the demos by tag instead of parsing files itself.
-
-![Reloops Smart Metadata on a script: an AI summary and generated tags like question hook, habit tracking, shot notes](https://uploads.linear.app/918fc35d-479a-43f8-93f5-da6404a21b57/123427de-94ee-420a-b099-9ae02ab816c7/c791f7f9-f9f4-46ab-86ed-20db2486743c?signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRoIjoiLzkxOGZjMzVkLTQ3OWEtNDNmOC05M2Y1LWRhNjQwNGEyMWI1Ny8xMjM0MjdkZS05NGVlLTQyMGEtYjA5OS05YWUwMmFiODE2YzcvYzc5MWY3ZjktZjlmNC00NmFiLTg2ZWQtMjBkYjI0ODY3NDNjIiwiaWF0IjoxNzg5MDc2NzgyLCJleHAiOjE3ODkwNzcwODJ9.8FefPmSxS_kpxZtRpx7GT1NaU92FlHoPkdSUfbtW5dg)
 
 Any store with an API can do this job. The requirement is structure and an id per script, not the specific tool.
 
