@@ -28,14 +28,14 @@ Generate on Monday and by Tuesday you have a folder of finished videos.
 
 What you need before Step 1:
 
-* A large-context model. We use GPT-6 Astra. Any model that fits your full campaign history in one prompt works, though swapping it changes voice and quality.
+* A large-context model. We suggest GPT-6 Astra, since that's what we used and tuned the prompts below against, but any model that fits your full campaign history in one prompt works — swapping it changes voice and quality, not whether the workflow runs.
 * An AI video generator with an API: Higgsfield, HeyGen, Arcads, Veo, and others. These vary in output quality and realism more than LLMs vary from each other, so this is the choice that will move your results the most.
 * [Reloops](https://www.reloops.app/), for storing the scripts and videos.
 * Somewhere to run the agent loop that connects them: a script, a cron job, or an MCP-capable agent runner like the [Codex CLI](https://developers.openai.com/codex/cli), with the [Reloops MCP server](/developers/mcp-server) connected to it.
 
 ## Step 1 - Generate the scripts
 
-Two prompts do the work here: one to load your campaign context, one to generate the batch. Run them in order, in the same conversation, so the second prompt can see the first.
+Two prompts do the work here: one to load your campaign context, one to generate the batch. Run them in order, in the same conversation, so the second prompt can see the first. Treat both as a starting point, not a script to paste verbatim — the structure (context first, then the batch ask, with a fixed output format) is what matters, so rewrite them in your own words if that gets better results out of your model.
 
 ### Load your campaign context
 
