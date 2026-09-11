@@ -1,27 +1,24 @@
 ---
 title: "How to Run 100+ UGC Videos a Week With GPT-6 Astra"
 sidebarTitle: "100+ UGC Videos a Week"
-description: "A start-to-finish workflow for scripting, generating, reviewing, and scheduling 100 UGC videos a week using GPT-6 Astra, an AI video generator, Reloops, and Postiz."
+description: "A start-to-finish workflow for scripting and generating 100 UGC videos a week using GPT-6 Astra, an AI video generator, and Reloops."
 ---
 
 Hiring creators to make UGC is slow and expensive: a brief per creator, days per batch, another round trip for every revision. It works for four videos a month, not forty.
 
-GPT-6 Astra changes that. Its context window now holds an entire campaign in one prompt, every past transcript, caption, and metric, so it writes scripts from your actual data instead of generic ad copy. That capability is the new part, not the model itself: any model with a big enough context window does the same job. An agent turns those scripts into videos, and the only human step left is picking which ones ship.
+GPT-6 Astra changes that. Its context window now holds an entire campaign in one prompt, every past transcript, caption, and metric, so it writes scripts from your actual data instead of generic ad copy. That capability is the new part, not the model itself: any model with a big enough context window does the same job. An agent turns those scripts into videos end to end.
 
-This post is the experiment: the prompts, the tools, and where each hands off to the next. Reloops is the storage and review layer in the middle.
+This post is the experiment: the prompts, the tools, and where each hands off to the next. Reloops is the storage layer in the middle.
 
 ## Tldr
 
-The whole workflow in five steps:
+The whole workflow in three steps:
 
 1. Load your campaign history into GPT-6 Astra, then have it write 100 UGC scripts across a spread of hook structures.
 2. Create a Reloops project with Scripts and Videos folders, then store the scripts as one asset per script using MCP.
 3. Run an agent loop that turns each script into a video and uploads each one into the Videos folder, named to match its script.
-4. Review the batch in Reloops: reject the weak ones, comment on the near-misses, approve the rest. Under an hour for 100.
 
-{/* 5. Hand the approved videos to a scheduler (we use Postiz) over MCP and let it post them across TikTok, Reels, and Shorts on a set cadence. */}
-
-Generate Monday, review Tuesday, and the queue stays full while you work on something else. Most of the tools have an open-source option.
+Generate on Monday and by Tuesday you have a folder of finished videos.
 
 ## Setup
 
@@ -29,10 +26,8 @@ What you need before Step 1:
 
 * A large-context model. We use GPT-6 Astra. Any model that fits your full campaign history in one prompt works.
 * An AI video generator with an API: Higgsfield, HeyGen, Arcads, Veo, and others.
-* [Reloops](https://www.reloops.app/), for storing the scripts and videos and reviewing the batch.
+* [Reloops](https://www.reloops.app/), for storing the scripts and videos.
 * Somewhere to run the agent loop that connects them: a script, a cron job, or an MCP-capable agent runner like the [Codex CLI](https://developers.openai.com/codex/cli), with the [Reloops MCP server](/developers/mcp-server) connected to it.
-
-{/* * A scheduler for publishing. We use Postiz, which you can host yourself. */}
 
 ## Step 1 - Generate the scripts
 
@@ -197,32 +192,67 @@ Run `codex` from that same terminal afterward. The key only needs to exist for t
 Paste this in, filling in your project name or URL:
 
 ```
-"For every file in the Scripts folder of my Reloops project [project name or
-URL]:
-1. Read its hook, body, cta, on_screen_text, and shot_notes fields.
-2. Build a Veo prompt: shot_notes as the scene description, hook + body + cta
-   as the spoken dialogue, on_screen_text as the on-screen caption.
-3. Call the Veo API with that prompt and wait for the returned mp4.
-4. Upload the mp4 to the Videos folder in the same Reloops project, named to
-   match the script file (007-list.md becomes 007-list.mp4).
-Do this for all 100 files. Don't ask me before each one, just run the whole
-batch and tell me when it's done."
+Process the scripts in the Scripts folder of this Reloops project:
+
+[PROJECT NAME OR URL]
+
+Goal: generate and upload videos for the first [N] scripts, or all scripts if N is not specified.
+
+For each script file:
+
+1. Read the fields:
+   - hook
+   - body
+   - cta
+   - on_screen_text
+   - shot_notes
+
+2. Create a Veo prompt using:
+   - shot_notes as the visual scene direction
+   - hook + body + cta as the exact spoken dialogue
+   - on_screen_text as the exact on-screen caption
+
+3. Generate an MP4 using the Google Gemini/Veo API with the configured `GEMINI_API_KEY`.
+   Use vertical 9:16 format and short-form UGC social-video styling.
+
+4. Wait for the long-running Veo operation to finish and download the returned MP4.
+
+5. Upload the MP4 to the Videos folder in the same Reloops project.
+   Preserve the original filename, changing only the extension:
+   `007-list.md` → `007-list.mp4`
+
+Execution requirements:
+
+- Use the Reloops MCP tools to read scripts and upload videos.
+- Use the Google Gemini/Veo API directly for video generation.
+- Process multiple files concurrently to reduce total runtime, but respect API and Reloops rate limits. Start with a concurrency of 3 and reduce it automatically if quota or rate-limit errors occur.
+- Do not ask for confirmation between files.
+- Automatically retry transient API, download, and upload failures up to 3 times with exponential backoff.
+- If a file fails after all retries, continue processing the remaining files and report the failure at the end.
+- Skip a video if the correctly named MP4 already exists in the Videos folder, unless regeneration is explicitly requested.
+- Maintain a progress log containing each filename, generation status, upload status, asset ID, and error message if applicable.
+- Verify that every successful upload has:
+  - the expected filename
+  - `video/mp4` content type
+  - a nonzero file size
+  - the correct Videos folder ID
+- At completion, report:
+  - total files discovered
+  - successfully generated
+  - successfully uploaded
+  - skipped files
+  - failed files and reasons
+  - uploaded asset IDs
+  - any remaining quota or rate-limit issues
+
+Begin immediately and run the complete batch without requesting per-file approval.
 ```
 
-![The instruction pasted into Codex CLI, with the Reloops project URL filled in](/images/codex-cli-paste-instruction.png)
+The one deliberate constraint worth calling out: bounded concurrency. Firing off all 100 generations at once sounds faster, but it walks straight into Veo's quota limits and most of the batch fails together. Three concurrent jobs with automatic backoff on quota errors is slower per-file but finishes the batch faster in practice, because it isn't spending most of its time retrying a wall of 429s.
 
-In plain terms, that instruction is asking the agent to run this loop:
+The retries, skip-existing check, and verification step also make the instruction safe to run more than once: if it dies partway through (quota exhausted, a bad connection), pasting the same instruction again picks up where it left off instead of regenerating and re-uploading everything from 001.
 
-```
-for each script in the Scripts folder:
-  read the fields
-  assemble the Veo prompt: shot_notes as the scene,
-    hook + body + cta as dialogue, on_screen_text as the caption
-  call the Veo API, wait for the mp4
-  upload it to the Videos folder, named to match (007-list.md -> 007-list.mp4)
-```
-
-It reads from Scripts and writes to Videos through the Reloops MCP server, so there is no manual upload step. It runs unattended, which is why testing forty hook variations is a line in the instruction, not a budget decision.
+It reads from Scripts and writes to Videos through the Reloops MCP server, so there is no manual upload step, and the closing report tells you exactly which files (if any) still need a rerun.
 
 ![The batch loop running: each script read from Reloops, a Veo prompt built, the clip generated and uploaded to the Videos folder](https://uploads.linear.app/918fc35d-479a-43f8-93f5-da6404a21b57/ae69c8e8-442e-42b9-9c32-82a5c767541e/4a65e9ea-d0c2-4dd6-880f-83f654e9226f?signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRoIjoiLzkxOGZjMzVkLTQ3OWEtNDNmOC05M2Y1LWRhNjQwNGEyMWI1Ny9hZTY5YzhlOC00NDJlLTQyYjktOWMzMi04MmE1Yzc2NzU0MWUvNGE2NWU5ZWEtZDBjMi00ZGQ2LTg4MGYtODNmNjU0ZTkyMjZmIiwiaWF0IjoxNzg5MDgxMDIzLCJleHAiOjE3ODkwODEzMjN9.Z6GOrJtu_SCcHcEbEPSHI224ajguJMHtsDH1FigBiWQ)
 
@@ -230,42 +260,10 @@ When the loop finishes, the Videos folder mirrors Scripts, one clip per script i
 
 ![The Videos folder in Reloops after the loop finishes, one clip per script from 001 to 010](https://uploads.linear.app/918fc35d-479a-43f8-93f5-da6404a21b57/09d75046-bdc5-435e-85ca-5bda1e393d79/1de05b59-e153-4e35-b991-aeb97438e7dd?signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRoIjoiLzkxOGZjMzVkLTQ3OWEtNDNmOC05M2Y1LWRhNjQwNGEyMWI1Ny8wOWQ3NTA0Ni1iZGM1LTQzNWUtODVjYS01YmRhMWUzOTNkNzkvMWRlMDViNTktZTE1My00ZTM1LWI5OTEtYWViOTc0MzhlN2RkIiwiaWF0IjoxNzg5MDc4MTMwLCJleHAiOjE3ODkwNzg0MzB9.wVggF1-5wTPd6_jjIDb0HspCgFd-ut1oteL5Yfe70MA)
 
-## Step 4 - Cherry-pick and approve
-
-You now have a folder of generated videos and one job left: decide which ones ship. This is the only step a human has to do, and it is fast because you are rejecting, not fixing.
-
-Open the folder in Reloops. Go down the list, or switch to the board view and move each clip between Needs review, In review, and Approved as you make the call. For most videos it takes a few seconds: the hook lands or it does not. Reject the weak ones and move on.
-
-For the ones that are close, drop a comment pinned to the exact second where it breaks ("hook reads flat at 0:02", "caption timing off at 0:09"). That comment is the regeneration brief.
-
-@cheeto close up of approve like gif prefrably here
-
-![Reloops review view: a clip open with Approve and Request revision, and two timestamped comments pinned to the moments they refer to](https://uploads.linear.app/918fc35d-479a-43f8-93f5-da6404a21b57/04f8925d-a297-4145-805b-f639a7d5c3b8/15f576cf-a255-4492-be13-da90669dadbb?signature=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXRoIjoiLzkxOGZjMzVkLTQ3OWEtNDNmOC05M2Y1LWRhNjQwNGEyMWI1Ny8wZTE0Nzg1OS1iODg1LTQ5ODAtYjI2ZC02MDExYmI4OGRmZTAvOWJjOTQ5OGEtY2FhZS00YWY3LWIyNWYtOThiMGI2YWVjODFlIiwiaWF0IjoxNzg5MDc4MjEzLCJleHAiOjE3ODkwNzg1MTN9.GJglq3nwILYKeK2eCOiWVd-f_pzjgjuTd-5ifbQW8t4)
-
-Three things make this quick at 100 videos:
-
-* Everything plays in one place. No downloading, no switching between a generator dashboard and a folder of MP4s.
-* Comments are timestamped to the frame, so "fix the hook" points at a specific moment instead of a whole video.
-* A near-miss does not go in the trash. Regenerate that one script with the comment as extra instruction and upload the new cut as v2 on the same asset. The comment stays pinned to v1, so you review the re-cut against the note that triggered it and nothing else moves.
-
-At the end you have a shortlist of approved videos, tagged and ready to schedule.
-
-{/*
-## Step 5 - Automate the publishing
-
-The approved videos are sitting in Reloops. The last piece is getting them out on a schedule without a person uploading files every morning.
-
-A social scheduler handles this. We use [Postiz](https://postiz.com), which is open source, so you can self-host it or run the hosted version. It connects to TikTok, Instagram Reels, and YouTube Shorts and posts on whatever cadence you set.
-
-The handoff runs over MCP. Reloops exposes its assets through an MCP server and Postiz takes scheduling commands the same way, so an agent can do the whole step: pull the approved videos from Reloops, push them into Postiz, space them across the next two weeks, set each caption from the script's on_screen_text field. You approve the schedule once.
-
-One batch of 30 approved videos is two weeks of posting at two a day. When the queue runs low, you run Step 1 again. That is the loop: generate on Monday, review Tuesday, and the queue stays full while you work on something else.
-*/}
-
 ## Run it yourself
 
 The two prompts in Step 1 are copy-paste ready. Load your campaign context, run the batch, and you have your scripts in one pass. The generation loop is some wiring against whichever video tool you pick.
 
-The one piece you do not have to build is the review and storage layer. That is what Reloops does: one place for the batch to land, frame-accurate comments on the near-misses, version history when you regenerate a script. Start with [Reloops](https://www.reloops.app/) and [point your agent](/developers/mcp-server) at it.
+The one piece you do not have to build is the storage layer. That is what Reloops does: one place for the batch to land, searchable and tagged the moment each script or video is uploaded. Start with [Reloops](https://www.reloops.app/) and [point your agent](/developers/mcp-server) at it.
 
-Tried the workflow? Tell us how many of your 100 made the cut.
+Tried the workflow? Tell us how it went.
