@@ -13,7 +13,7 @@ Reloops is built for creative review files first. The web upload picker is confi
 | Images | `.jpg`, `.jpeg`, `.png`, `.gif`, `.webp`, `.svg` | `image/jpeg`, `image/png`, `image/gif`, `image/webp`, `image/svg+xml` | Image review, annotations, comments, thumbnails, sharing, and compare mode |
 | Videos | `.mp4`, `.mov`, `.qt`, `.m4v`, `.webm`, `.mkv` | `video/mp4`, `video/quicktime`, `video/x-m4v`, `video/webm`, `video/x-matroska` | Video review, playback, timecoded comments, thumbnails, sharing, and compare mode |
 | PDFs | `.pdf` | `application/pdf` | PDF review, page preview, comments, sharing, and compare mode |
-| Audio | `.mp3`, `.m4a`, `.mp4`, `.wav`, `.flac`, `.aac`, `.ogg` | `audio/mpeg`, `audio/mp4`, `audio/wav`, `audio/x-wav`, `audio/flac`, `audio/aac`, `audio/ogg` | Stored as project assets with metadata, tags, sharing, and download |
+| Audio | `.mp3`, `.m4a`, `.mp4`, `.wav`, `.flac`, `.aac`, `.ogg` | `audio/mpeg`, `audio/mp4`, `audio/wav`, `audio/x-wav`, `audio/flac`, `audio/aac`, `audio/ogg` | Audio playback, timecoded comments, embedded cover artwork when available, sharing, and download |
 | Text and data | `.txt`, `.csv`, `.json` | `text/plain`, `text/csv`, `application/json` | Stored as project assets with metadata, tags, sharing, search, and download |
 
 <Note>
@@ -35,10 +35,10 @@ Different file types get different review surfaces.
 | Capability | Images | Videos | PDFs | Audio | Text/data |
 | --- | --- | --- | --- | --- | --- |
 | Project asset card | Yes | Yes | Yes | Yes | Yes |
-| Preview in review page | Yes | Yes | Yes | Limited | Limited |
-| Comments | Yes | Yes | Yes | Asset-level only | Asset-level only |
+| Preview in review page | Yes | Yes | Yes | Yes | Limited |
+| Comments | Yes | Yes | Yes | Yes | Asset-level only |
 | Drawing or annotation tools | Yes | No | No | No | No |
-| Timecoded comments | No | Yes | No | No | No |
+| Timecoded comments | No | Yes | No | Yes | No |
 | Compare mode | Yes | Yes | Yes | No | No |
 | Share links and downloads | Yes | Yes | Yes | Yes | Yes |
 
@@ -46,7 +46,9 @@ Different file types get different review surfaces.
 
 Reloops generates the best preview it can for supported review formats.
 
-- Images, videos, and PDFs can receive thumbnails.
+- Images, videos, PDFs, and audio files with embedded artwork can receive thumbnails.
+- MP3 ID3 artwork, FLAC picture blocks, and M4A attached artwork can be used as audio cover images when present.
+- Audio files without embedded artwork show a music icon fallback in asset cards and the audio review player.
 - Very large files may finish uploading before thumbnail processing completes.
 - Files without a dedicated preview can still be organized, tagged, shared, and downloaded.
 - AI metadata is best supported for images, videos, audio, text, documents, and design-like formats.
@@ -60,7 +62,8 @@ That upload API:
 - requires a valid user session or API key,
 - checks workspace access before signing or completing uploads,
 - stores the file in object storage,
-- records the provided `contentType` as the asset `mime_type`,
+- records the upload `contentType` as the asset `mime_type`, with extension-based fallback for common media types when the client sends a generic binary type,
+- can request thumbnail generation after upload, including embedded audio cover artwork for non-web uploads,
 - enforces **5GB** as the multipart upload maximum.
 
 The API does not maintain a separate extension allowlist. If you upload a file type outside the web picker through an API path, Reloops may store it as a generic downloadable asset, but preview, thumbnail, compare, and AI metadata support can be limited.

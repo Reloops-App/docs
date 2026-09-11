@@ -112,6 +112,13 @@
         ]
       },
       {
+        "group": "Guides",
+        "icon": "clapperboard",
+        "pages": [
+          "guides/100-ugc-videos-with-gpt-6-astra"
+        ]
+      },
+      {
         "group": "FAQ",
         "icon": "circle-help",
         "pages": [
