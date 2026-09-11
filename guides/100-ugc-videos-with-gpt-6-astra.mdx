@@ -1,6 +1,6 @@
 ---
-title: "How to Run 100+ UGC Videos a Week With GPT-6 Astra"
-sidebarTitle: "100+ UGC Videos a Week"
+title: "Automating 100+ UGC Videos a Week"
+sidebarTitle: "Automating 100+ UGC Videos a Week"
 description: "A start-to-finish workflow for scripting and generating 100 UGC videos a week using GPT-6 Astra, an AI video generator, and Reloops."
 ---
 
@@ -9,6 +9,10 @@ Hiring creators to make UGC is slow and expensive: a brief per creator, days per
 GPT-6 Astra changes that. Its context window now holds an entire campaign in one prompt, every past transcript, caption, and metric, so it writes scripts from your actual data instead of generic ad copy. That capability is the new part, not the model itself: any model with a big enough context window does the same job. An agent turns those scripts into videos end to end.
 
 This post is the experiment: the prompts, the tools, and where each hands off to the next. Reloops is the storage layer in the middle.
+
+<Warning>
+  This is an experimental workflow we ran ourselves, not a supported or guaranteed pipeline. Script quality, hook performance, and video fidelity all depend heavily on which models you plug in — swap the script model or the video generator and your results won't match this post's screenshots.
+</Warning>
 
 ## Tldr
 
@@ -24,8 +28,8 @@ Generate on Monday and by Tuesday you have a folder of finished videos.
 
 What you need before Step 1:
 
-* A large-context model. We use GPT-6 Astra. Any model that fits your full campaign history in one prompt works.
-* An AI video generator with an API: Higgsfield, HeyGen, Arcads, Veo, and others.
+* A large-context model. We use GPT-6 Astra. Any model that fits your full campaign history in one prompt works, though swapping it changes voice and quality.
+* An AI video generator with an API: Higgsfield, HeyGen, Arcads, Veo, and others. These vary in output quality and realism more than LLMs vary from each other, so this is the choice that will move your results the most.
 * [Reloops](https://www.reloops.app/), for storing the scripts and videos.
 * Somewhere to run the agent loop that connects them: a script, a cron job, or an MCP-capable agent runner like the [Codex CLI](https://developers.openai.com/codex/cli), with the [Reloops MCP server](/developers/mcp-server) connected to it.
 
@@ -87,6 +91,7 @@ RULES:
 OUTPUT FORMAT (one file per script):
 
 id: 001
+model: [name and version of the model generating this script]
 hook_structure: question
 hook: [first line, on screen and spoken]
 on_screen_text: [overlay for the hook, max 8 words]
@@ -100,6 +105,8 @@ return only the zip. no commentary before or after."
 ```
 
 ![GPT-6 Astra running the batch prompt and returning a Download file / Download the ZIP link](/images/chatgpt-generate-batch-zip.png)
+
+Hook variety, groundedness, and writing voice are a direct function of which model runs this prompt — GPT-6 Astra is the model we used, not a requirement. The `model` field on each script exists so you can tell which model wrote it later, which matters if you swap models mid-campaign or need to compare a batch's performance against the model that generated it.
 
 ## Step 2 - Store the scripts where the agent can read them
 
@@ -121,8 +128,6 @@ Astra already handed you a zip of 100 script files, one per id, because the prom
 
 <video src="/videos/workspace-after-upload-100-scripts.mp4" controls />
 
-Unzip the folder and upload the .md files into the Scripts folder in Reloops.
-
 On upload, Reloops reads each script and tags it: the hook structure, the format, the subject, plus a one-line summary.
 
 Any store with an API can do this job. The requirement is structure and an id per script, not the specific tool.
@@ -133,7 +138,7 @@ Turning a script into a video is three small pieces: a video generator with an A
 
 ### Get a video generator
 
-You need an AI video tool with an API. We used the [Google Veo 3.1 video generation model](https://ai.google.dev/gemini-api/docs/video) through the [Gemini API](https://ai.google.dev/gemini-api/docs). Any generator with an API works the same way: Higgsfield, HeyGen, and Arcads all take a script, a voice, and a scene.
+You need an AI video tool with an API. We used the [Google Veo 3.1 video generation model](https://ai.google.dev/gemini-api/docs/video) through the [Gemini API](https://ai.google.dev/gemini-api/docs). Any generator with an API works the same way: Higgsfield, HeyGen, and Arcads all take a script, a voice, and a scene. The rest of this section is written against Veo specifically, since that's what we used — swapping generators means adapting the API calls below, not just the prompt.
 
 <Steps>
   <Step title="Open Google AI Studio">
@@ -190,6 +195,9 @@ Process the scripts in the Scripts folder of this Reloops project:
 
 [PROJECT NAME OR URL]
 
+Video model: Google Veo 3.1, via the Gemini API (swap this line and the credential
+below for your own generator and its API if you're not using Veo).
+
 Goal: generate and upload videos for the first [N] scripts, or all scripts if N is not specified.
 
 For each script file:
@@ -201,15 +209,16 @@ For each script file:
    - on_screen_text
    - shot_notes
 
-2. Create a Veo prompt using:
+2. Create a prompt for the video model specified above, using:
    - shot_notes as the visual scene direction
    - hook + body + cta as the exact spoken dialogue
    - on_screen_text as the exact on-screen caption
 
-3. Generate an MP4 using the Google Gemini/Veo API with the configured `GEMINI_API_KEY`.
+3. Generate an MP4 using the video model specified above, with the configured
+   `GEMINI_API_KEY` (or your generator's equivalent credential).
    Use vertical 9:16 format and short-form UGC social-video styling.
 
-4. Wait for the long-running Veo operation to finish and download the returned MP4.
+4. Wait for the long-running generation operation to finish and download the returned MP4.
 
 5. Upload the MP4 to the Videos folder in the same Reloops project.
    Preserve the original filename, changing only the extension:
@@ -218,7 +227,7 @@ For each script file:
 Execution requirements:
 
 - Use the Reloops MCP tools to read scripts and upload videos.
-- Use the Google Gemini/Veo API directly for video generation.
+- Use the video model specified above directly for video generation.
 - Process multiple files concurrently to reduce total runtime, but respect API and Reloops rate limits. Start with a concurrency of 3 and reduce it automatically if quota or rate-limit errors occur.
 - Do not ask for confirmation between files.
 - Automatically retry transient API, download, and upload failures up to 3 times with exponential backoff.
@@ -242,6 +251,8 @@ Execution requirements:
 Begin immediately and run the complete batch without requesting per-file approval.
 ```
 
+Set `[N]` to 10 the first time, not 100. That's what we did: we ran the loop against ten scripts first, caught a prompt-wording issue on the third one, and by the time we'd tuned it and re-run, we'd burned about $25 generating six usable videos. Video generation isn't cheap when you're iterating on the prompt, and a bad run of 100 costs a lot more to discover than a bad run of 10 does. Once the first ten look right, drop `[N]` and paste the instruction again for the rest.
+
 The one deliberate constraint worth calling out: bounded concurrency. Firing off all 100 generations at once sounds faster, but it walks straight into Veo's quota limits and most of the batch fails together. Three concurrent jobs with automatic backoff on quota errors is slower per-file but finishes the batch faster in practice, because it isn't spending most of its time retrying a wall of 429s.
 
 The retries, skip-existing check, and verification step also make the instruction safe to run more than once: if it dies partway through (quota exhausted, a bad connection), pasting the same instruction again picks up where it left off instead of regenerating and re-uploading everything from 001.
@@ -260,4 +271,4 @@ The two prompts in Step 1 are copy-paste ready. Load your campaign context, run 
 
 The one piece you do not have to build is the storage layer. That is what Reloops does: one place for the batch to land, searchable and tagged the moment each script or video is uploaded. Start with [Reloops](https://www.reloops.app/) and [point your agent](/developers/mcp-server) at it.
 
-Tried the workflow? Tell us how it went.
+Tried the workflow? Tell us how it went at [support@reloops.app](mailto:support@reloops.app).
